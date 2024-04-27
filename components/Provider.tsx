@@ -1,12 +1,18 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
+import  { SessionProvider } from 'next-auth/react';
 
 interface ProviderProps {
-  
+  session: any;
+  children: ReactNode;
 };
 
-const Provider: FC<ProviderProps> = ({}) => {
+const Provider: FC<ProviderProps> = ({ children, session }) => {
   return (
-    <div>Provider</div>
+    <SessionProvider
+      session={session}
+    >
+      {children}
+    </SessionProvider>
   );
 };
 
