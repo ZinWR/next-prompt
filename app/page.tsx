@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import Feed from '../components/Feed';
+
 interface pageProps {
   
 };
@@ -15,7 +17,7 @@ const Home: FC<pageProps> = ({}) => {
         <p className='desc text-center'>
             Next-Prompt is an open-source AI prompting tool for modern world to discover, create, and share creative prompts
         </p>
-        { /* Feed */}
+        <Feed />
     </section>
   );
 };
