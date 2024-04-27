@@ -10,7 +10,7 @@ interface NavProps {
 };
 
 const Nav: FC<NavProps> = ({}) => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession<boolean>();
   const [providers, setProviders] = useState<object | null>(null);
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
@@ -24,39 +24,31 @@ const Nav: FC<NavProps> = ({}) => {
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
       <Link href='/' className='flex gap-2 flex-center'>
-        <Image 
+        <Image
           src='/assets/images/logo.svg'
-          alt='Logo'
+          alt='logo'
           width={30}
           height={30}
           className='object-contain'
         />
         <p className='logo_text'>Next Prompt</p>
       </Link>
+
       {/* Desktop Navigation */}
       <div className='sm:flex hidden'>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className='flex gap-3 md:gap-5'>
-            <Link 
-              href="/create-prompt"
-              className='black_btn'
-            >
+            <Link href='/create-prompt' className='black_btn'>
               Create Post
             </Link>
 
-            <button 
-              type='button' 
-              onClick={signOut}
-              className='outline_btn'
-            >
+            <button type='button' onClick={signOut} className='outline_btn'>
               Sign Out
             </button>
 
-            <Link
-              href='/profile'
-            >
-              <Image 
-                src='/assets/images/logo.svg'
+            <Link href='/profile'>
+              <Image
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className='rounded-full'
@@ -66,34 +58,36 @@ const Nav: FC<NavProps> = ({}) => {
           </div>
         ) : (
           <>
-            {providers && 
+            {providers &&
               Object.values(providers).map((provider) => (
                 <button
-                  key={provider.name}
                   type='button'
-                  onClick={() => signIn(provider.id)}
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
                   className='black_btn'
                 >
-                  Sign In
+                  Sign in
                 </button>
-              ))
-            }
+              ))}
           </>
         )}
       </div>
 
       {/* Mobile Navigation */}
       <div className='sm:hidden flex relative'>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className='flex'>
-            <Image 
-                src='/assets/images/logo.svg'
-                width={37}
-                height={37}
-                className='rounded-full'
-                alt='profile'
-                onClick={() => setToggleDropdown((prev) => !prev)}
-              />
+            <Image
+              src={session?.user.image}
+              width={37}
+              height={37}
+              className='rounded-full'
+              alt='profile'
+              onClick={() => setToggleDropdown(!toggleDropdown)}
+            />
+
             {toggleDropdown && (
               <div className='dropdown'>
                 <Link
@@ -125,22 +119,22 @@ const Nav: FC<NavProps> = ({}) => {
           </div>
         ) : (
           <>
-            {providers && 
+            {providers &&
               Object.values(providers).map((provider) => (
                 <button
-                  key={provider.name}
                   type='button'
-                  onClick={() => signIn(provider.id)}
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
                   className='black_btn'
                 >
-                  Sign In
+                  Sign in
                 </button>
-              ))
-            }
+              ))}
           </>
         )}
       </div>
-
     </nav>
   );
 };
