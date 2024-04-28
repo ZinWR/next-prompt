@@ -4,7 +4,8 @@ A simple NextJS AI Prompt app to manage AI prompts
 
 # Tech Stack
 
-- NextJS & Next-auth
+- TypeScript
+- NextJS & Next-auth (Google OAuth integrated)
 - React
 - BCrypt
 - MongoDB
