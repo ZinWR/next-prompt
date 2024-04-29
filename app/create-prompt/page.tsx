@@ -16,10 +16,16 @@ const CreatePrompt: FC<pageProps> = ({}) => {
     prompt: '',
     tag: ''
   });
-  
+
+  const createPrompt = async (e) => {};
+
   return (
     <Form 
-
+      type='Create'
+      post={post}
+      setPost={setPost}
+      submiting={submitting}
+      handleSubmit={createPrompt}
     />
   );
 };
