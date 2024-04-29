@@ -5,15 +5,15 @@ interface FormProps {
   type: string;
   post: { prompt: string; tag: string; };
   setPost: (arg0: { prompt: string; tag: string; }) => void;
-  submiting: boolean;
-  handleSubmit: () => void;
+  submitting: boolean;
+  handleSubmit: (e: MouseEvent) => Promise<void>;
 };
 
 const Form: FC<FormProps> = ({
   type,
   post,
   setPost,
-  submiting,
+  submitting,
   handleSubmit
 }) => {
   return (
@@ -40,20 +40,36 @@ const Form: FC<FormProps> = ({
           required
           className='form_textarea'
         />
-        {/* Tag  */}
+        {/* Tag */}
         <label>
           <span className='font-satoshit font-semibold text-bae text-gray-700'>
             Tag 
             <span className='font-normal'> (#product, #webdevelopment, #idea)</span>
           </span>
         </label>
-        <textarea 
-          value={post.prompt}
-          onChange={(e) => setPost({ ...post, prompt: e.target.value })}
-          placeholder='Write your prompt here...'
+        <input 
+          value={post.tag}
+          onChange={(e) => setPost({ ...post, tag: e.target.value })}
+          placeholder='#tag'
           required
-          className='form_textarea'
+          className='form_input'
         />
+        {/* Buttons for Cancel/Submit */}
+        <div className='flex-end mx-3 mb-5 gap-4'>
+          <Link
+            href='/'
+            className='text-gray-500 text-sm'
+          >
+            Cancel
+          </Link>
+          <button
+            type='submit'
+            disabled={submitting}
+            className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+          >
+            {submitting ? `${type}...` : type}
+          </button>
+        </div>
       </form>
     </section>
   );
