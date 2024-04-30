@@ -5,9 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
-interface NavProps {
-  
-};
+interface NavProps {};
 
 const Nav: FC<NavProps> = ({}) => {
   const { data: session } = useSession<boolean>();

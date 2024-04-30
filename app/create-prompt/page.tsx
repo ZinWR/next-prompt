@@ -3,12 +3,9 @@
 import { FC, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-
 import Form from '@components/Form';
 
-interface pageProps {
-  
-};
+interface pageProps {};
 
 const CreatePrompt: FC<pageProps> = ({}) => {
   const router = useRouter();
