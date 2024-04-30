@@ -16,10 +16,9 @@ const PromptCard: FC<PromptCardProps> = ({ post, handleTagClick, handleEdit, han
   const { data: session } = useSession<boolean>();
   const pathName: string = usePathname();
   const router = useRouter();
-
   const [copied, setCopied] = useState<string | boolean >("");
 
-  const handleProfileClick = () => {
+  const handleProfileClick = (): void => {
     console.log(post);
 
     if (post.creator._id === session?.user.id) return router.push("/profile");
@@ -27,7 +26,7 @@ const PromptCard: FC<PromptCardProps> = ({ post, handleTagClick, handleEdit, han
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
 
-  const handleCopy = () => {
+  const handleCopy = (): void => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(false), 3000);

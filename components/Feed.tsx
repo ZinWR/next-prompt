@@ -37,7 +37,7 @@ const Feed: FC<FeedProps> = ({}) => {
     setAllPosts(data);
   };
 
-  const filterPrompts = (searchtext: string) => {
+  const filterPrompts = (searchtext: string): any[] => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
     return allPosts.filter(
       (item) =>
