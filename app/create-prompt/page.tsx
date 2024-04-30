@@ -11,6 +11,8 @@ interface pageProps {
 };
 
 const CreatePrompt: FC<pageProps> = ({}) => {
+  const router = useRouter();
+  const { data: session } = useSession<boolean>();
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [post, setPost] = useState<{ prompt: string; tag: string; }>({
     prompt: '',
@@ -21,6 +23,7 @@ const CreatePrompt: FC<pageProps> = ({}) => {
     e.preventDefault(); // prevent reloading
     setSubmitting(true);
     try {
+      console.log("Session is ", session);
       const response = await fetch('/api/prompt/new', {
         method: 'POST',
         body: JSON.stringify({
