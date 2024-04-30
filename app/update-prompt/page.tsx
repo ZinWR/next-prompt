@@ -1,50 +1,68 @@
 "use client";
 
-import { FC, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { FC, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Form from '@components/Form';
 
 interface pageProps {};
 
 const EditPrompt: FC<pageProps> = ({}) => {
   const router = useRouter();
-  const { data: session } = useSession<boolean>();
-  const [submitting, setSubmitting] = useState<boolean>(false);
+  const seachParams = useSearchParams();
+  const promptId = seachParams.get('id');
+
+  const [submitting, setIsSubmitting] = useState<boolean>(false);
   const [post, setPost] = useState<{ prompt: string; tag: string; }>({
     prompt: '',
     tag: ''
   });
 
-  const createPrompt = async (e: MouseEvent) => {
-    e.preventDefault(); // prevent reloading
-    setSubmitting(true);
+  useEffect(() => {
+    const getPromptDetails = async (): Promise<void> => {
+      const response = await fetch(`/api/prompt/${promptId}`);
+      const data = await response.json();
+
+      setPost({
+        prompt: data.prompt,
+        tag: data.tag,
+      });
+    };
+
+    if (promptId) getPromptDetails();
+  }, [promptId]);
+
+  const updatePrompt = async (e: MouseEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    if (!promptId) return alert("Missing PromptId!");
+
     try {
-      console.log("Session is ", session);
-      const response = await fetch('/api/prompt/new', {
-        method: 'POST',
+      const response = await fetch(`/api/prompt/${promptId}`, {
+        method: "PATCH",
         body: JSON.stringify({
           prompt: post.prompt,
-          userId: session?.user.id,
-          tag: post.tag
-        })
+          tag: post.tag,
+        }),
       });
 
-      if (response.ok) router.push('/')
+      if (response.ok) {
+        router.push("/");
+      }
     } catch (error) {
       console.log(error);
     } finally {
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
     <Form 
-      type='Create'
+      type='Edit'
       post={post}
       setPost={setPost}
       submitting={submitting}
-      handleSubmit={createPrompt}
+      handleSubmit={updatePrompt}
     />
   );
 };
