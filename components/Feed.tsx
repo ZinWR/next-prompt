@@ -28,7 +28,7 @@ const Feed: FC<FeedProps> = ({}) => {
 
   // Search states
   const [searchText, setSearchText] = useState<string>('');
-  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchTimeout, setSearchTimeout] = useState<null | NodeJS.Timeout>(null);
   const [searchedResults, setSearchedResults] = useState<any[]>([]);
 
   const fetchPosts = async (): Promise<void> => {
@@ -48,7 +48,8 @@ const Feed: FC<FeedProps> = ({}) => {
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    clearTimeout(searchTimeout);
+    // condition to clearTime out ONLY not null!
+    searchTimeout && clearTimeout(searchTimeout);
     setSearchText(e.target.value);
 
     // debounce method
