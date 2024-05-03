@@ -4,7 +4,7 @@ A simple NextJS AI Prompt app to manage AI prompts
 
 # Tech Stack
 
-Severless Arthitecture with only NextJS/React
+Serverless Architecture with only NextJS/React
 
 - TypeScript
 - NextJS & Next-auth (Google OAuth integrated)
@@ -21,10 +21,10 @@ Severless Arthitecture with only NextJS/React
     - Search by tag
     - Search by username
 
-[] Implement Click on tag - Feed Component
+[] Implement Click on the tag - Feed Component
 
     - Fill the tag in the search and search right away
 
 [] Implement View other profiles
 
-    - Click on profile and redirect on their profile not your own
+    - Click on the profile and redirect to their profile not your own
