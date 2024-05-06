@@ -1,3 +1,7 @@
+<div align="center">
+    <img src="https://github.com/ZinWR/next-prompt/assets/97579692/c2bff7f4-d959-4e5b-ab93-ada31f7a6dbf" alt="CubeGame Logo" width="300" height="auto">
+</div>
+
 # Next-Prompt
 
 A simple NextJS AI Prompt app to manage AI prompts
